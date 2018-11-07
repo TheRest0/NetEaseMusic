@@ -18,10 +18,9 @@ $(function(){
 			})
 		})
 	let audio = document.createElement('audio')
-	console.log(audio)
-	audio.src = '../All Time Low.mp3'
-	audio.oncanpaly = function () {
+	audio.src = '那些你很冒险的梦.mp3'
+	audio.oncanplay = function () {
 		audio.play()
-		//$('disc-container').addClass('play')
+		$('.disc-container').addClass('playing')
 	}
 })	
