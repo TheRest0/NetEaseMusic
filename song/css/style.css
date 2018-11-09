@@ -37,6 +37,11 @@
 	align-items: center;
 	margin-top: 17vw;
 }
+.disc-container .pause{
+	width: 15vw;
+	position: absolute;
+	/*z-index: 10;*/
+}
 .disc-container .ring{
 	width: 72vw;
 }

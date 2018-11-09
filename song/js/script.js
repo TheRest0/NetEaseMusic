@@ -23,4 +23,15 @@ $(function(){
 		audio.play()
 		$('.disc-container').addClass('playing')
 	}
+	$('.disc-container,.song-description').click(function(){
+		if(audio.paused){
+			audio.play()
+			$(".pause").css("z-index","-1")
+			$('.disc-container').addClass('playing')
+		}else{
+			audio.pause()
+			$(".pause").css("z-index","10")
+			$('.disc-container').removeClass('playing')
+		}
+	})
 })	
