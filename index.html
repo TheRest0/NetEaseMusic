@@ -5,6 +5,7 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>网易云音乐</title>
 	<link rel="stylesheet" href="css/style.css">
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 </head>
 <body>
 	<header class="topbar">
@@ -51,57 +52,10 @@
 	</section>
 	<section class="lastestMusic">
 		<h2>最新音乐</h2>
-		<ol>
-			<li>
-				<h3>歌曲</h3>
-				<p>文字</p>
-				<a href="#"></a>
-			</li>
-			<li>
-				<h3>歌曲</h3>
-				<p>文字</p>
-				<a href="#"></a>
-			</li>
-			<li>
-				<h3>歌曲</h3>
-				<p>文字</p>
-				<a href="#"></a>
-			</li>
-			<li>
-				<h3>歌曲</h3>
-				<p>文字</p>
-				<a href="#"></a>
-			</li>
-			<li>
-				<h3>歌曲</h3>
-				<p>文字</p>
-				<a href="#"></a>
-			</li>
-			<li>
-				<h3>歌曲</h3>
-				<p>文字</p>
-				<a href="#"></a>
-			</li>
-			<li>
-				<h3>歌曲</h3>
-				<p>文字</p>
-				<a href="#"></a>
-			</li>
-			<li>
-				<h3>歌曲</h3>
-				<p>文字</p>
-				<a href="#"></a>
-			</li>
-			<li>
-				<h3>歌曲</h3>
-				<p>文字</p>
-				<a href="#"></a>
-			</li>
-			<li>
-				<h3>歌曲</h3>
-				<p>文字</p>
-				<a href="#"></a>
-			</li>
+		<ol id="lastestMusic">
+			<p id="lastestMusicloading">
+				<img src="./image/loading.gif" alt="加载中">
+			</p>
 		</ol>
 	</section>
 	<section class="art">
@@ -115,5 +69,6 @@
 			网易公司版权所有©1997-2018   杭州乐读科技有限公司运营
 		</div>
 	</section>
+	<script src="./js/index.js"></script>
 </body>
 </html>

@@ -18,7 +18,7 @@ $(function(){
 			})
 		})
 	let audio = document.createElement('audio')
-	audio.src = '那些你很冒险的梦.mp3'
+	audio.src = 'musiclist/那些你很冒险的梦.mp3'
 	audio.oncanplay = function () {
 		audio.play()
 		$('.disc-container').addClass('playing')

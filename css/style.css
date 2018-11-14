@@ -1,6 +1,7 @@
 *{margin: 0; padding: 0; box-sizing: border-box; }
 *::before,*::after{box-sizing: border-box; }
 ul,ol{list-style: none; }
+a{text-decoration: none; color: inherit;}
 body{font-size: 3.7vw; }
 h1,h2,h3{font-weight: normal;}
 
@@ -9,7 +10,7 @@ section>h2:first-child{font-size: 4.6vw; border-left: 2px solid #D43C33; padding
 
 .topbar{background:#D43C33; padding: 4.5vw 3.8vw; display: flex; align-items: center; justify-content: space-between; }
 .topbar .logo{width: 36vw; }
-.topbar .downloadApp{font-size: 1.1em; line-height: 7.5vw; border: 1px solid rgba(255,255,255,0.5); border-radius: 4.25vw; display: block; color: white; text-decoration: none; padding: 0 .5em }
+.topbar .downloadApp{font-size: 1.1em; line-height: 7.5vw; border: 1px solid rgba(255,255,255,0.5); border-radius: 4.25vw; display: block; color: white;  padding: 0 .5em }
 
 
 .sitenav{}
@@ -28,6 +29,7 @@ section>h2:first-child{font-size: 4.6vw; border-left: 2px solid #D43C33; padding
 
 .lastestMusic{}
 .lastestMusic > ol{padding-left: 2.6vw; }
+.lastestMusic > ol > p:first-child{text-align: center;}
 .lastestMusic > ol > li{border-bottom: 1px solid #E2E2E2; padding: 2vw 0; }
 .lastestMusic > ol > li > h3{font-size: 4.53vw; margin-bottom: 2px; }
 .lastestMusic > ol > li > p{font-size: 3.2vw; color: #888; }
@@ -50,7 +52,6 @@ section.art .openApp{
 	color: #D43C33;
 	border: 1px solid;
 	font-size: 4.3vw;
-	text-decoration: none;
 	line-height: 8vw;
 	border-radius: 5.35vw;
 }
