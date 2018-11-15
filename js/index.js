@@ -6,7 +6,8 @@ $(function () {
 			<li>
 				<a href="../song/song.html?id=${i.id}">
 					<h3>${i.name}</h3>
-					<p>文字</p>
+					<p>${i.album}</p>
+					<span></span>
 				</a>
 			</li>			
 				`)
