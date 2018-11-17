@@ -40,6 +40,32 @@ $(function(){
 				$('.disc-container').removeClass('playing')
 			}
 		})
+		setInterval(()=>{
+			let seconds = audio.currentTime
+			let munites = ~~(seconds / 60)
+			let left = seconds - munites * 60
+			let time = `${pad(munites)}:${pad(left)}`
+			let $lines = $('.lines > p')
+			let $whichLine
+			for(var i = 0;i < $lines.length; i++){
+				let currentLineTime = $lines.eq(i).attr('data-time')
+				let nextLineTime = $lines.eq(i+1).attr('data-time')
+				if($lines.eq(i+1).length !== 0 && currentLineTime < time && nextLineTime > time){
+					$whichLine = $lines.eq(i)
+					break
+				}
+			}
+			if ($whichLine) {
+				$whichLine.addClass('active').prev().removeClass('active')
+				let top = $whichLine.offset().top
+				let linesTop = $('.lines').offset().top
+				let delta = top - linesTop - $('.lyric').height()/3
+				$('.lines').css('transform',`translateY(-${delta}px)`)
+			}
+		},1000)
+		function pad(number) {
+			return number >=10 ? number + '' : '0' + number
+		}
 	}
 	//获取音乐歌词
 	function parseLyric(lyric) {

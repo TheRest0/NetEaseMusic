@@ -79,9 +79,12 @@
 	height: 76px;
 	overflow: hidden;
 }
-
-..song-description p.active{
-
+.song-description{
+	transition: transform 0.3s;
+}
+.song-description p.active{
+	color: white;
+	font-size: 1.1em
 }
 .page > .links{
 	display: flex;
