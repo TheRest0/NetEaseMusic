@@ -14,11 +14,14 @@ section>h2:first-child{font-size: 4.6vw; border-left: 2px solid #D43C33; padding
 
 
 .sitenav{}
-.sitenav > ul{display: flex; text-align:center; border-bottom: 1px solid rgba(220,220,220,0.8); font-size: 1.1em; }
-.sitenav >ul >li{flex: 1; }
-.sitenav >ul >li>span{padding: 3px 5px 0; line-height: 9.5vw; display: inline-block; }
-.sitenav >ul >li>span.active{color: #D43C33; border-bottom: 2px solid #D43C33; }
+.sitenav > ol{display: flex; text-align:center; border-bottom: 1px solid rgba(220,220,220,0.8); font-size: 1.1em; }
+.sitenav >ol >li{flex: 1; }
+.sitenav >ol >li>span{padding: 3px 5px 0; line-height: 9.5vw; display: inline-block; }
+.sitenav >ol >li>span.active{color: #D43C33; border-bottom: 2px solid #D43C33; }
 
+
+.tabContent >li{display: none;}
+.tabContent >li.active{display: block;}
 
 .playlists{}
 .playlists > ul{display: flex; flex-wrap: wrap; justify-content: space-between; }
