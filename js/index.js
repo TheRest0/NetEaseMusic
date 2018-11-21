@@ -1,25 +1,52 @@
 ﻿$(function () {
-	setTimeout(function(){
-		$.get('./js/index.json').then(function(response){
-			let items = response
-			items.forEach((i)=>{
-				if (i.id < 11) {
-					let $li = $(`
-					<li>
-						<a href="../song/song.html?id=${i.id}">
-							<h3>${i.name}</h3>
-							<p>${i.album}</p>
-							<span></span>
+	//推荐歌单信息添加
+	$.get('./js/playlists.json').then(function (response) {
+		let items = response
+		items.forEach((i)=>{
+			let $li = $(`
+				<li>
+						<a href="../playlist/playlist.html?id=${i.id}">
+							<img src="${i.img}" alt="">
+							<span>
+								<svg class="icon" aria-hidden="true">
+							    <use xlink:href="#icon-n"></use>
+								</svg>
+								${i.number}万
+							</span>
+							<p>${i.title}</p>
 						</a>
-					</li>			
-						`)
-					$('#lastestMusic').append($li)
-				}else{}
-			})
-			$('#lastestMusicloading').remove()
-		},function(){
-		})	
-	},500)
+					</li>
+					`)
+			$('#playList').append($li)
+		})
+	})
+
+	//添加歌曲列表
+		setTimeout(function(){
+			$.get('./js/index.json').then(function(response){
+				let items = response
+				items.forEach((i)=>{
+					if (i.id < 11) {
+						let $li = $(`
+						<li>
+							<a href="../song/song.html?id=${i.id}">
+								<h3>${i.name}</h3>
+								<p>${i.album}</p>
+								<span></span>
+							</a>
+						</li>			
+							`)
+						$('#lastestMusic').append($li)
+					}else{}
+				})
+				$('#lastestMusicloading').remove()
+			},function(){
+			})	
+		},500)
+
+
+
+	//热歌榜信息添加
 	$('.sitenav').on('click','ol.tabItems>li',function (e) {
 		let $li = $(e.currentTarget)
 		$li.children().addClass('active').parent().siblings().children().removeClass('active')
@@ -82,7 +109,7 @@
 		} 
 	})
 
-
+	//搜索页面设置
 	let timer = undefined
 	$('input#searchSong').on('input',function (e) {
 		let $input = $(e.currentTarget)
