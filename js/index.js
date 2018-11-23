@@ -5,17 +5,17 @@
 		items.forEach((i)=>{
 			let $li = $(`
 				<li>
-						<a href="../playlist/playlist.html?id=${i.id}">
-							<img src="${i.img}" alt="">
-							<span>
-								<svg class="icon" aria-hidden="true">
-							    <use xlink:href="#icon-n"></use>
-								</svg>
-								${i.number}万
-							</span>
-							<p>${i.title}</p>
-						</a>
-					</li>
+					<a href="../playlist/playlist.html?id=${i.id}">
+						<img src="${i.img}" alt="">
+						<span>
+							<svg class="icon" aria-hidden="true">
+						    	<use xlink:href="#icon-n"></use>
+							</svg>
+							${i.number}万
+						</span>
+						<p>${i.title}</p>
+					</a>
+				</li>
 					`)
 			$('#playList').append($li)
 		})
