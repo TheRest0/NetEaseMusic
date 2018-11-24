@@ -45,13 +45,39 @@ $(function () {
 				`)
 			$('.label').append($span)
 		})
-		let jianjie = introduction.split(',')
-		jianjie.forEach((i)=>{
-			let $p = $(`
-					<p>${i}</span>
-				`)
-			$('.intro').append($p)
-		})
+		if (introduction) {
+			let jianjie = introduction.split(',')
+			jianjie.forEach((i)=>{
+				let $p = $(`
+						<p>${i}</span>
+					`)
+				$('.intro').append($p)
+			})
+		}else{
+			$('.intro').removeClass("hidden")
+		}	
 	}
 	
+	let jsonUrl = "./js/list" + id + ".json"
+	//歌曲列表添加
+	setTimeout(function(){
+		$.get(jsonUrl).then(function(response){
+			let items = response
+			items.forEach((i)=>{
+				let $li = $(`
+				<li>
+					<a href="../song/song.html?id=${i.id}">
+						<h2>${i.id}</h2>
+						<div><h3>${i.name}</h3>
+						<p>${i.album}</p>
+						<span></span></div>
+					</a>
+				</li>		
+					`)
+				$('#musicList').append($li)
+			})
+			$('#listloading').remove()
+		},function(){
+		})	
+	},500)
 })	
