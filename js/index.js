@@ -5,7 +5,7 @@
 		items.forEach((i)=>{
 			let $li = $(`
 				<li>
-					<a href="/NetEaseMusic/playlist/playlist.html?id=${i.id}">
+					<a href="/playlist/playlist.html?id=${i.id}">
 					<img src="${i.img}" alt="">
 						<span>
 							<svg class="icon" aria-hidden="true">
@@ -23,13 +23,13 @@
 
 	//添加歌曲列表
 		setTimeout(function(){
-			$.get('/NetEaseMusic/js/index.json').then(function(response){
+			$.get('/js/index.json').then(function(response){
 				let items = response
 				items.forEach((i)=>{
 					if (i.id < 11) {
 						let $li = $(`
 						<li>
-							<a href="../song/song.html?id=${i.id}">
+							<a href="/song/song.html?id=${i.id}">
 								<h3>${i.name}</h3>
 								<p>${i.album}</p>
 								<span></span>
@@ -130,8 +130,6 @@
 		}else{
 			$('#output').text('')
 		}
-<<<<<<< HEAD
-
 		timer = setTimeout(function () {
 			search(value).then((result)=>{
 				timer = undefined
@@ -142,8 +140,6 @@
 				}
 			})
 		},300)
-=======
->>>>>>> 4066ef44b6535bd18be8c04af4ec0935c1b80a87
 	})
 
 	function search(keyword) {
@@ -159,7 +155,6 @@
 			})
 			setTimeout(function(){
 				resolve(result)
-
 			},(Math.random()*300+1000))
 		})
 		window.search = search
