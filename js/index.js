@@ -23,7 +23,7 @@
 
 	//添加歌曲列表
 		setTimeout(function(){
-			$.get('./js/index.json').then(function(response){
+			$.get('/NetEaseMusic/js/index.json').then(function(response){
 				let items = response
 				items.forEach((i)=>{
 					if (i.id < 11) {
