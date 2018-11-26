@@ -5,7 +5,7 @@
 		items.forEach((i)=>{
 			let $li = $(`
 				<li>
-					<a href="../playlist/playlist.html?id=${i.id}">
+					<a href="/NetEaseMusic/playlist/playlist.html?id=${i.id}">
 						<img src="${i.img}" alt="">
 						<span>
 							<svg class="icon" aria-hidden="true">
@@ -43,8 +43,6 @@
 			},function(){
 			})	
 		},500)
-
-
 
 	//热歌榜信息添加
 	$('.sitenav').on('click','ol.tabItems>li',function (e) {
@@ -124,7 +122,7 @@
 				if (result.length !== 0) {
 					$('#output').text(result.map((r)=>r.name).join(','))
 				}else{
-					$('#output').text('Ã»ÓÐ½á¹û')
+					$('#output').text('没有结果')
 				}
 			})
 		},300)
@@ -133,10 +131,10 @@
 	function search(keyword) {
 		return new Promise((resolve,reject)=>{
 			var database = [
-				{"id":1, "name": "¿ÉÀÖ"},
-				{"id":2, "name": "É½Çð (Live)", },
-				{"id":3, "name": "¹âÄêÖ®Íâ", },
-				{"id":4, "name": "ÄÇÐ©ÄãºÜÃ°ÏÕµÄÃÎ", }
+				{"id":1, "name": "可乐"},
+				{"id":2, "name": "山丘 (Live)", },
+				{"id":3, "name": "光年之外", },
+				{"id":4, "name": "那些你很冒险的梦", }
 			]
 			let result = database.filter(function (item) {
 				return item.name.indexOf(keyword)>=0
