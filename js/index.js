@@ -6,7 +6,7 @@
 			let $li = $(`
 				<li>
 					<a href="/NetEaseMusic/playlist/playlist.html?id=${i.id}">
-						<img src="${i.img}" alt="">
+					<img src="${i.img}" alt="">
 						<span>
 							<svg class="icon" aria-hidden="true">
 						    	<use xlink:href="#icon-n"></use>
@@ -58,7 +58,7 @@
 			return
 		}
 		if (index === 1) {
-			$.get('./js/index.json').then(function(response){
+			$.get('/js/index.json').then(function(response){
 				$li.attr('data-downloaded','yes')
 				let myDate = new Date();
 				let month=myDate.getMonth()+1;
@@ -73,7 +73,7 @@
 						if (id < 10) {
 							let $li = $(`
 							<li>
-								<a href="../song/song.html?id=${i.id}">
+								<a href="/song/song.html?id=${i.id}">
 									<h2>0${i.id}</h2>
 									<div><h3>${i.name}</h3>
 									<p>${i.album}</p>
@@ -85,7 +85,7 @@
 						}else{
 							let $li = $(`
 							<li>
-								<a href="../song/song.html?id=${i.id}">
+								<a href="/song/song.html?id=${i.id}">
 									<h2>${i.id}</h2>
 									<div><h3>${i.name}</h3>
 									<p>${i.album}</p>
@@ -100,7 +100,7 @@
 				},500)
 			})
 		}else if (index === 2) {
-			$.get('./js/page3.json').then((response)=>{
+			$.get('/js/page3.json').then((response)=>{
 				$li.text(response.content)
 				$li.attr('data-downloaded','yes')
 			})
@@ -112,9 +112,25 @@
 	$('input#searchSong').on('input',function (e) {
 		let $input = $(e.currentTarget)
 		let value = $input.val().trim()
-		if (timer) {
-			clearTimeout(timer)
+		if (value) {
+			if (timer) {
+				clearTimeout(timer)
+			}
+			timer = setTimeout(function () {
+				search(value).then((result)=>{
+					timer = undefined
+					if (result.length !== 0) {
+						console.log(result)
+						$('#output').text(result.map((r)=>r.name).join(','))
+					}else{
+						$('#output').text('没有结果')
+					}
+				})
+			},300)
+		}else{
+			$('#output').text('')
 		}
+<<<<<<< HEAD
 
 		timer = setTimeout(function () {
 			search(value).then((result)=>{
@@ -126,6 +142,8 @@
 				}
 			})
 		},300)
+=======
+>>>>>>> 4066ef44b6535bd18be8c04af4ec0935c1b80a87
 	})
 
 	function search(keyword) {

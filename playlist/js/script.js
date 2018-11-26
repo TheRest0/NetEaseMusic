@@ -1,7 +1,7 @@
 $(function () {
 	//推荐歌单信息添加
 	let id = parseInt(location.search.match(/\bid=([^&]*)/)[1],10)
-	$.get('../js/playlists.json').then(function (response) {
+	$.get('/playlist/js/playlists.json').then(function (response) {
 		let infos = response
 		let info = infos.filter(s=>s.id === id)[0]
 		let {img,title,number,author,auImg,label,introduction} = info
@@ -66,7 +66,7 @@ $(function () {
 			items.forEach((i)=>{
 				let $li = $(`
 				<li>
-					<a href="../song/song.html?id=${i.id}">
+					<a href="/song/song.html?id=${i.id}">
 						<h2>${i.id}</h2>
 						<div><h3>${i.name}</h3>
 						<p>${i.album}</p>
