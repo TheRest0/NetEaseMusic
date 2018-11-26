@@ -1,11 +1,11 @@
 ﻿$(function () {
 	//推荐歌单信息添加
-	$.get('./js/playlists.json').then(function (response) {
+	$.get('js/playlists.json').then(function (response) {
 		let items = response
 		items.forEach((i)=>{
 			let $li = $(`
 				<li>
-					<a href="/playlist/playlist.html?id=${i.id}">
+					<a href="playlist/playlist.html?id=${i.id}">
 					<img src="${i.img}" alt="">
 						<span>
 							<svg class="icon" aria-hidden="true">
@@ -23,13 +23,13 @@
 
 	//添加歌曲列表
 		setTimeout(function(){
-			$.get('/js/index.json').then(function(response){
+			$.get('js/index.json').then(function(response){
 				let items = response
 				items.forEach((i)=>{
 					if (i.id < 11) {
 						let $li = $(`
 						<li>
-							<a href="/song/song.html?id=${i.id}">
+							<a href="song/song.html?id=${i.id}">
 								<h3>${i.name}</h3>
 								<p>${i.album}</p>
 								<span></span>
@@ -58,7 +58,7 @@
 			return
 		}
 		if (index === 1) {
-			$.get('/js/index.json').then(function(response){
+			$.get('js/index.json').then(function(response){
 				$li.attr('data-downloaded','yes')
 				let myDate = new Date();
 				let month=myDate.getMonth()+1;
@@ -73,7 +73,7 @@
 						if (id < 10) {
 							let $li = $(`
 							<li>
-								<a href="/song/song.html?id=${i.id}">
+								<a href="song/song.html?id=${i.id}">
 									<h2>0${i.id}</h2>
 									<div><h3>${i.name}</h3>
 									<p>${i.album}</p>
@@ -85,7 +85,7 @@
 						}else{
 							let $li = $(`
 							<li>
-								<a href="/song/song.html?id=${i.id}">
+								<a href="song/song.html?id=${i.id}">
 									<h2>${i.id}</h2>
 									<div><h3>${i.name}</h3>
 									<p>${i.album}</p>
@@ -100,7 +100,7 @@
 				},500)
 			})
 		}else if (index === 2) {
-			$.get('/js/page3.json').then((response)=>{
+			$.get('js/page3.json').then((response)=>{
 				$li.text(response.content)
 				$li.attr('data-downloaded','yes')
 			})

@@ -1,6 +1,6 @@
 $(function(){
 	let id = parseInt(location.search.match(/\bid=([^&]*)/)[1],10)
-	$.get('../js/index.json').then(function(response){
+	$.get('song/js/index.json').then(function(response){
 		let songs = response
 		let song = songs.filter(s=>s.id === id)[0]
 		let {url,name,author,img,backimg,lyric} = song

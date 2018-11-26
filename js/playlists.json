@@ -1,20 +1,20 @@
 [{
 	"id":51,
-	"img":"./image/古巨基.webp",
+	"img":"image/古巨基.webp",
 	"title":"《情歌王》里的所有情歌（已排序）",
 	"number":"200.6",
 	"author":"青菜0123",
-	"auImg":"./image/青菜0123.webp",
+	"auImg":"image/青菜0123.webp",
 	"label":"华语,流行",
 	"introduction":"简介：加上“情歌王”一共32首歌，已经排序了。其实几乎每一首都是十分经典的情歌，每首歌每段回忆。部分歌曲的原唱网易没有收录，用了live版或者我认为不错的翻唱代替，欢迎提出意见。"
 },
 {
 	"id":52,
-	"img":"./image/那吾克热.webp",
+	"img":"image/那吾克热.webp",
 	"title":"Rap 说唱-艾热&那吾克热",
 	"number":"88.6",
 	"author":"Akbarjan_A",
-	"auImg":"./image/Akbarjan_A.webp",
+	"auImg":"image/Akbarjan_A.webp",
 	"label":"说唱,榜单",
 	"introduction":""
 },
