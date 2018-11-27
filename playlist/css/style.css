@@ -5,6 +5,12 @@ a{text-decoration: none; color: inherit;}
 .icon{width: 1em; height: 1em; vertical-align: -0.15em; fill: currentColor; overflow: hidden; }
 h1,h2,h3{font-weight: normal;}
 
+#listloading{text-align: center;padding-top: 50vh;}
+.disnone{display: none;}
+.page footer{background: white;text-align: center;height: 12vw;position: fixed;bottom: 0;z-index: 2;width: 100%}
+.page footer a{background: #d33a31; border:1px solid #d33a31; color: white; line-height: 11vw; height: 11vw; padding:2.2vw 28vw; border-radius: 6vw; }
+.page footer a svg{font-size: 7.5vw; vertical-align: middle; }
+
 
 .topInfo{width: 100%; position: relative; padding: 30px 10px 30px 15px; overflow: hidden; }
 .bg-blur{ height:300px; float: left; width: 100%; background-size: cover; /*    -webkit-filter: blur(15px); -moz-filter: blur(15px); -o-filter: blur(15px); -ms-filter: blur(15px);*/ filter: blur(15px); position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: -1; }
@@ -33,9 +39,9 @@ h1,h2,h3{font-weight: normal;}
 
 
 .playList > h3{height: 23px; line-height: 23px; padding: 0 10px; font-size: 12px; color: #666; background-color: #eeeff0; }
-.playList > ol > p:first-child{text-align: center;}
 .playList > ol > li{border-bottom: 1px solid #E2E2E2; padding: 1.4vw 0; position: relative;}
 .playList > ol > li > a > h2{float: left; font-size:1.2em;color: #999; line-height: 10vw;padding: 0 3vw;}
 .playList > ol > li > a > div > h3{width:83vw;font-size: 4.53vw; margin-bottom: 2px;display: -webkit-box;-webkit-line-clamp:1; -webkit-box-orient:vertical; overflow: hidden; text-overflow: ellipsis; }
 .playList > ol > li > a > div > p{font-size: 3.2vw; color: #888; }
-.playList > ol > li > a > div > span{display: inline-block; width: 5.8vw; height: 5.9vw; background: url(playlist/image/index.png); no-repeat; background-size: 166px 97px; background-position: -24px 0; position: absolute; right: 5px; top: 50%; transform: translate(0,-50%); }
+.playList > ol > li > a > div > span{display: inline-block; width: 5.8vw; height: 5.9vw; background: url(/NetEaseMusic/image/index.png); no-repeat; background-size: 166px 97px; background-position: -24px 0; position: absolute; right: 5px; top: 50%; transform: translate(0,-50%); }
+

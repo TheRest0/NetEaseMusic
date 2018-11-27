@@ -5,11 +5,14 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<title>网易云音乐</title>
 	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
-	<script src="//at.alicdn.com/t/font_928777_sj0nt4vs75c.js"></script>
-	<link rel="stylesheet" href="css/style.css">
+	<script src="//at.alicdn.com/t/font_928777_cadpew0izsu.js"></script>
+	<link rel="stylesheet" href="/NetEaseMusic/playlist/css/style.css">
 </head>
 <body>
-	<div class="page">
+	<p id="listloading">
+		<img src="/NetEaseMusic/image/loading.gif" alt="加载中">
+	</p>
+	<div class="page disnone">
 		<section class="topInfo">
 			<div class="bg-blur"></div>
 			<div class="listInfo">
@@ -49,12 +52,17 @@
 		<section class="playList">
 			<h3>歌曲列表</h3>
 			<ol id="musicList">
-				<p id="listloading">
-					<img src="../image/loading.gif" alt="加载中">
-				</p>
 			</ol>
 		</section>
+		<footer>
+			<a href="#">
+				<svg class="icon" aria-hidden="true">
+				    <use xlink:href="#icon-wangyiyun"></use>
+				</svg>
+				收藏歌单
+			</a>
+		</footer>
 	</div>
-	<script src="js/script.js"></script>
+	<script src="/NetEaseMusic/playlist/js/script.js"></script>
 </body>
 </html>

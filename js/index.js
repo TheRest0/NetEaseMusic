@@ -1,11 +1,11 @@
 ﻿$(function () {
 	//推荐歌单信息添加
-	$.get('js/playlists.json').then(function (response) {
+	$.get('/NetEaseMusic/js/playlists.json').then(function (response) {
 		let items = response
 		items.forEach((i)=>{
 			let $li = $(`
 				<li>
-					<a href="playlist/playlist.html?id=${i.id}">
+					<a href="/NetEaseMusic/playlist/playlist.html?id=${i.id}">
 					<img src="${i.img}" alt="">
 						<span>
 							<svg class="icon" aria-hidden="true">
@@ -23,13 +23,13 @@
 
 	//添加歌曲列表
 		setTimeout(function(){
-			$.get('js/index.json').then(function(response){
+			$.get('/NetEaseMusic/js/index.json').then(function(response){
 				let items = response
 				items.forEach((i)=>{
 					if (i.id < 11) {
 						let $li = $(`
 						<li>
-							<a href="song/song.html?id=${i.id}">
+							<a href="/NetEaseMusic/song/song.html?id=${i.id}">
 								<h3>${i.name}</h3>
 								<p>${i.album}</p>
 								<span></span>
@@ -58,7 +58,7 @@
 			return
 		}
 		if (index === 1) {
-			$.get('js/index.json').then(function(response){
+			$.get('/NetEaseMusic/js/index.json').then(function(response){
 				$li.attr('data-downloaded','yes')
 				let myDate = new Date();
 				let month=myDate.getMonth()+1;
@@ -73,7 +73,7 @@
 						if (id < 10) {
 							let $li = $(`
 							<li>
-								<a href="song/song.html?id=${i.id}">
+								<a href="/NetEaseMusic/song/song.html?id=${i.id}">
 									<h2>0${i.id}</h2>
 									<div><h3>${i.name}</h3>
 									<p>${i.album}</p>
@@ -85,7 +85,7 @@
 						}else{
 							let $li = $(`
 							<li>
-								<a href="song/song.html?id=${i.id}">
+								<a href="/NetEaseMusic/song/song.html?id=${i.id}">
 									<h2>${i.id}</h2>
 									<div><h3>${i.name}</h3>
 									<p>${i.album}</p>
@@ -97,66 +97,68 @@
 						}	
 					})
 					$('#hottMusicloading').remove()
+					let $a = $(`
+						<a href="#">查看完整榜单&nbsp;></a>
+							`)
+					$('.tab2>footer').append($a)
 				},500)
+				
 			})
 		}else if (index === 2) {
-			$.get('js/page3.json').then((response)=>{
-				$li.text(response.content)
-				$li.attr('data-downloaded','yes')
+			//搜索页面设置
+			let timer = undefined
+			$('input#searchSong').on('input',function (e) {
+				let $input = $(e.currentTarget)
+				let value = $input.val().trim()
+				if (value) {
+					if (timer) {
+						clearTimeout(timer)
+					}
+					timer = setTimeout(function () {
+						search(value).then((result)=>{
+							timer = undefined
+							if (result.length !== 0) {
+								console.log(result)
+								$('#output').text(result.map((r)=>r.name).join(','))
+							}else{
+								$('#output').text('没有结果')
+							}
+						})
+					},300)
+				}else{
+					$('#output').text('')
+				}
+				timer = setTimeout(function () {
+					search(value).then((result)=>{
+						timer = undefined
+						if (result.length !== 0) {
+							$('#output').text(result.map((r)=>r.name).join(','))
+						}else{
+							$('#output').text('没有结果')
+						}
+					})
+				},300)
 			})
+
+			function search(keyword) {
+				return new Promise((resolve,reject)=>{
+					var database = [
+						{"id":1, "name": "可乐"},
+						{"id":2, "name": "山丘 (Live)", },
+						{"id":3, "name": "光年之外", },
+						{"id":4, "name": "那些你很冒险的梦", }
+					]
+					let result = database.filter(function (item) {
+						return item.name.indexOf(keyword)>=0
+					})
+					setTimeout(function(){
+						resolve(result)
+					},(Math.random()*300+1000))
+				})
+				window.search = search
+			}
 		} 
 	})
 
-	//搜索页面设置
-	let timer = undefined
-	$('input#searchSong').on('input',function (e) {
-		let $input = $(e.currentTarget)
-		let value = $input.val().trim()
-		if (value) {
-			if (timer) {
-				clearTimeout(timer)
-			}
-			timer = setTimeout(function () {
-				search(value).then((result)=>{
-					timer = undefined
-					if (result.length !== 0) {
-						console.log(result)
-						$('#output').text(result.map((r)=>r.name).join(','))
-					}else{
-						$('#output').text('没有结果')
-					}
-				})
-			},300)
-		}else{
-			$('#output').text('')
-		}
-		timer = setTimeout(function () {
-			search(value).then((result)=>{
-				timer = undefined
-				if (result.length !== 0) {
-					$('#output').text(result.map((r)=>r.name).join(','))
-				}else{
-					$('#output').text('没有结果')
-				}
-			})
-		},300)
-	})
-
-	function search(keyword) {
-		return new Promise((resolve,reject)=>{
-			var database = [
-				{"id":1, "name": "可乐"},
-				{"id":2, "name": "山丘 (Live)", },
-				{"id":3, "name": "光年之外", },
-				{"id":4, "name": "那些你很冒险的梦", }
-			]
-			let result = database.filter(function (item) {
-				return item.name.indexOf(keyword)>=0
-			})
-			setTimeout(function(){
-				resolve(result)
-			},(Math.random()*300+1000))
-		})
-		window.search = search
-	}
+	
 })
