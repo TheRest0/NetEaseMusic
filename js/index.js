@@ -110,7 +110,14 @@
 			$('input#searchSong').on('input',function (e) {
 				let $input = $(e.currentTarget)
 				let value = $input.val().trim()
-				if (value) {
+				if (value.length !== 0) {
+					$('.icon-guanbi,.searchVal').removeClass('hidden')
+					let $span = $('.searchVal>span')
+					$span.empty().text(value)
+					$('.icon-guanbi').on('click',function () {
+						$('#searchSong').val('')
+						$('.icon-guanbi,.searchVal').addClass('hidden')
+					})
 					if (timer) {
 						clearTimeout(timer)
 					}
@@ -118,7 +125,6 @@
 						search(value).then((result)=>{
 							timer = undefined
 							if (result.length !== 0) {
-								console.log(result)
 								$('#output').text(result.map((r)=>r.name).join(','))
 							}else{
 								$('#output').text('没有结果')
@@ -126,18 +132,9 @@
 						})
 					},300)
 				}else{
+					$('.icon-guanbi,.searchVal').addClass('hidden')
 					$('#output').text('')
-				}
-				timer = setTimeout(function () {
-					search(value).then((result)=>{
-						timer = undefined
-						if (result.length !== 0) {
-							$('#output').text(result.map((r)=>r.name).join(','))
-						}else{
-							$('#output').text('没有结果')
-						}
-					})
-				},300)
+				}	
 			})
 
 			function search(keyword) {
