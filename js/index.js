@@ -111,12 +111,14 @@
 				let $input = $(e.currentTarget)
 				let value = $input.val().trim()
 				if (value.length !== 0) {
-					$('.icon-guanbi,.searchVal').removeClass('hidden')
+					$('.icon-guanbi,.searchVal,#output').removeClass('hidden')
+					$('.hotSearch,.historySearch').addClass('hidden')
 					let $span = $('.searchVal>span')
 					$span.empty().text(value)
 					$('.icon-guanbi').on('click',function () {
 						$('#searchSong').val('')
-						$('.icon-guanbi,.searchVal').addClass('hidden')
+						$('.icon-guanbi,.searchVal,#output').addClass('hidden')
+					$('.hotSearch,.historySearch').removeClass('hidden')
 					})
 					if (timer) {
 						clearTimeout(timer)
@@ -132,7 +134,8 @@
 						})
 					},300)
 				}else{
-					$('.icon-guanbi,.searchVal').addClass('hidden')
+					$('.icon-guanbi,.searchVal,#output').addClass('hidden')
+					$('.hotSearch,.historySearch').removeClass('hidden')
 					$('#output').text('')
 				}	
 			})

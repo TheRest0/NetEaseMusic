@@ -40,7 +40,7 @@ section>h2:first-child{font-size: 4.6vw; border-left: 2px solid #D43C33; padding
 .lastestMusic > ol > li{border-bottom: 1px solid #E2E2E2; padding: 1.4vw 0; position: relative;}
 .lastestMusic > ol > li > a > h3{width:87.8vw;font-size: 4.53vw; margin-bottom: 2px;display: -webkit-box;-webkit-line-clamp:1; -webkit-box-orient:vertical; overflow: hidden; text-overflow: ellipsis; }
 .lastestMusic > ol > li > a > p{font-size: 3.2vw; color: #888; }
-.lastestMusic > ol > li > a > span{display: inline-block; width: 5.8vw; height: 5.8vw; background: url(/NetEaseMusic/image/index.png); no-repeat; background-size: 166px 97px; background-position: -24px 0; position: absolute; right: 5px; top: 50%; transform: translate(0,-50%); }
+.lastestMusic > ol > li > a > span{display: inline-block; width: 5.8vw; height: 5.8vw; background: url(/NetEaseMusic/image/index.png); no-repeat; background-size: 44vw 26vw; background-position: -6.5vw 0; position: absolute; right: 5px; top: 50%; transform: translate(0,-50%); }
 
 section.art{text-align: center; padding-top: 17.6vw; padding-bottom: 5vw; background: transparent url(/NetEaseMusic/image/recommand_bg_2x.png) no-repeat center 0; }
 section.art .logosvg{width: 61.7vw; }
@@ -72,18 +72,48 @@ section.art .copyright{font-size: 3.2vw; transform: scale(.75); color: #888; }
 .searchVal{color: #507daf; font-size: 4vw; line-height: 13vw; height: 13vw;border-bottom: 1px solid #BEBEBE; padding-left: 2.5vw; }
 
 
-.hotSearch{
+.searchMid > .hotSearch{
 	width: 100%;
 	margin-left: 2vw;
 }
-.hotSearch h5{
+.searchMid > .hotSearch > h5{
 	color:#BEBEBE;
-	margin: 4vw 0;
+	margin: 2vw 0;
 }
-.hotSearch span{
+.searchMid > .hotSearch > .hotCon{
+	word-wrap: break-word;
+}
+.searchMid > .hotSearch > .hotCon span{
 	border: 1px solid #BEBEBE;
 	border-radius: 5vw;
 	padding: 1.5vw 3vw;
 	margin-right: 1.5vw;
-	word-wrap: break-word;
+	line-height: 11vw;
+}
+.searchMid > #output{
+	
+}
+.historySearch{
+	margin-top: 3vw;
+}
+.historySearch > ol > li{
+	padding-top: 3.5vw;
+}
+.historySearch > ol > li > svg{
+	font-size: 5vw;
+	float: left;
+	margin-left: 2vw;
+}
+.historySearch > ol > li div{
+	border-bottom: 1px solid #F0F0F0;
+	margin-left: 10%;
+	padding-bottom:3.5vw;
+	position: relative;
+	width: 90%;
+}
+.historySearch > ol > li div svg{
+	position: absolute;
+	right: 3vw;
+	top: 1vw;
+	font-size: 4.5vw;
 }
