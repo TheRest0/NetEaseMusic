@@ -72,48 +72,24 @@ section.art .copyright{font-size: 3.2vw; transform: scale(.75); color: #888; }
 .searchVal{color: #507daf; font-size: 4vw; line-height: 13vw; height: 13vw;border-bottom: 1px solid #BEBEBE; padding-left: 2.5vw; }
 
 
-.searchMid > .hotSearch{
+.searchMid > .hotSearch{width: 100%; margin-left: 2vw; }
+.searchMid > .hotSearch > h5{color:#BEBEBE; margin: 2vw 0; }
+.searchMid > .hotSearch > .hotCon{word-wrap: break-word; }
+.searchMid > .hotSearch > .hotCon span{border: 1px solid #BEBEBE; border-radius: 5vw; padding: 1.5vw 3vw; margin-right: 1.5vw; line-height: 11vw; }
+.searchMid > .searchResult{
+	height: 50vw;
+}
+.searchResult > .resultCon{
+	padding: 3vw 0 3vw 2vw;
+}
+.searchResult > .resultCon > span{
 	width: 100%;
-	margin-left: 2vw;
+	border-bottom: 1px solid #BEBEBE;
+	padding:3vw 0;
+	font-size: 4vw;
 }
-.searchMid > .hotSearch > h5{
-	color:#BEBEBE;
-	margin: 2vw 0;
-}
-.searchMid > .hotSearch > .hotCon{
-	word-wrap: break-word;
-}
-.searchMid > .hotSearch > .hotCon span{
-	border: 1px solid #BEBEBE;
-	border-radius: 5vw;
-	padding: 1.5vw 3vw;
-	margin-right: 1.5vw;
-	line-height: 11vw;
-}
-.searchMid > #output{
-	
-}
-.historySearch{
-	margin-top: 3vw;
-}
-.historySearch > ol > li{
-	padding-top: 3.5vw;
-}
-.historySearch > ol > li > svg{
-	font-size: 5vw;
-	float: left;
-	margin-left: 2vw;
-}
-.historySearch > ol > li div{
-	border-bottom: 1px solid #F0F0F0;
-	margin-left: 10%;
-	padding-bottom:3.5vw;
-	position: relative;
-	width: 90%;
-}
-.historySearch > ol > li div svg{
-	position: absolute;
-	right: 3vw;
-	top: 1vw;
-	font-size: 4.5vw;
-}
+.historySearch{margin-top: 3vw; }
+.historySearch > ol > li{padding-top: 3.5vw; }
+.historySearch > ol > li > svg{font-size: 5vw; float: left; margin-left: 2vw; }
+.historySearch > ol > li div{border-bottom: 1px solid #F0F0F0; margin-left: 10%; padding-bottom:3.5vw; position: relative; width: 90%; }
+.historySearch > ol > li div svg{position: absolute; right: 3vw; top: 1vw; font-size: 4.5vw; }

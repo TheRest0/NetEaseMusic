@@ -22,29 +22,29 @@
 	})
 
 	//添加歌曲列表
-		setTimeout(function(){
-			$.get('/NetEaseMusic/js/index.json').then(function(response){
-				let items = response
-				items.forEach((i)=>{
-					if (i.id < 11) {
-						let $li = $(`
-						<li>
-							<a href="/NetEaseMusic/song/song.html?id=${i.id}">
-								<h3>${i.name}</h3>
-								<p>${i.album}</p>
-								<span></span>
-							</a>
-						</li>			
-							`)
-						$('#lastestMusic').append($li)
-					}else{}
-				})
-				$('#lastestMusicloading').remove()
-			},function(){
-			})	
-		},500)
+	setTimeout(function(){
+		$.get('/NetEaseMusic/js/index.json').then(function(response){
+			let items = response
+			items.forEach((i)=>{
+				if (i.id < 11) {
+					let $li = $(`
+					<li>
+						<a href="/NetEaseMusic/song/song.html?id=${i.id}">
+							<h3>${i.name}</h3>
+							<p>${i.album}</p>
+							<span></span>
+						</a>
+					</li>			
+						`)
+					$('#lastestMusic').append($li)
+				}else{}
+			})
+			$('#lastestMusicloading').remove()
+		},function(){
+		})	
+	},500)
 
-	//热歌榜信息添加
+	//tab切换设置
 	$('.sitenav').on('click','ol.tabItems>li',function (e) {
 		let $li = $(e.currentTarget)
 		$li.children().addClass('active').parent().siblings().children().removeClass('active')
@@ -58,6 +58,7 @@
 			return
 		}
 		if (index === 1) {
+			//热歌榜页面设置
 			$.get('/NetEaseMusic/js/index.json').then(function(response){
 				$li.attr('data-downloaded','yes')
 				let myDate = new Date();
@@ -106,57 +107,73 @@
 			})
 		}else if (index === 2) {
 			//搜索页面设置
-			let timer = undefined
-			$('input#searchSong').on('input',function (e) {
-				let $input = $(e.currentTarget)
-				let value = $input.val().trim()
-				if (value.length !== 0) {
-					$('.icon-guanbi,.searchVal,#output').removeClass('hidden')
-					$('.hotSearch,.historySearch').addClass('hidden')
-					let $span = $('.searchVal>span')
-					$span.empty().text(value)
-					$('.icon-guanbi').on('click',function () {
-						$('#searchSong').val('')
-						$('.icon-guanbi,.searchVal,#output').addClass('hidden')
-					$('.hotSearch,.historySearch').removeClass('hidden')
-					})
-					if (timer) {
-						clearTimeout(timer)
+			$.get('/NetEaseMusic/js/index.json').then(function(response){
+				let timer = undefined
+				response.forEach((i)=>{
+					if (i.id<9) {
+						let $span = $(`
+							<span>${i.name}</span>
+							`)
+						$('.hotCon').append($span)
+					}else{
 					}
-					timer = setTimeout(function () {
+				})
+				$('input#searchSong').on('input',function (e) {
+					let $input = $(e.currentTarget)
+					let value = $input.val().trim()
+					if (value.length !== 0) {
+						$('.icon-guanbi,.searchVal,#output').removeClass('hidden')
+						$('.hotSearch,.historySearch').addClass('hidden')
+						let $span = $('.searchVal>span')
+						$span.empty().text(value)
+						$('.icon-guanbi').on('click',function () {
+							$('#searchSong').val('')
+							$('.icon-guanbi,.searchVal,#output').addClass('hidden')
+						$('.hotSearch,.historySearch').removeClass('hidden')
+						})
+						if (timer) {
+							clearTimeout(timer)
+						}
+						timer = setTimeout(function () {
+							search(value).then((result)=>{
+								timer = undefined
+								if (result.length !== 0) {
+									console.log(result)
+									$('#output').text(result.map((r)=>r.name).join('-'))
+								}else{							
+								}
+							})
+						},300)
+					}else{
+						$('.icon-guanbi,.searchVal,#output').addClass('hidden')
+						$('.hotSearch,.historySearch').removeClass('hidden')
+						$('#output').text('')
+					}	
+				})
+				//监听键盘回车事件
+				$('input#searchSong').on('keydown',function (event) {
+					if (event.keyCode == "13") {
+						let $input = $(event.currentTarget)
+						let value = $input.val().trim()
+						console.log(value)
 						search(value).then((result)=>{
-							timer = undefined
 							if (result.length !== 0) {
-								$('#output').text(result.map((r)=>r.name).join(','))
-							}else{
-								$('#output').text('没有结果')
 							}
 						})
-					},300)
-				}else{
-					$('.icon-guanbi,.searchVal,#output').addClass('hidden')
-					$('.hotSearch,.historySearch').removeClass('hidden')
-					$('#output').text('')
-				}	
-			})
-
-			function search(keyword) {
-				return new Promise((resolve,reject)=>{
-					var database = [
-						{"id":1, "name": "可乐"},
-						{"id":2, "name": "山丘 (Live)", },
-						{"id":3, "name": "光年之外", },
-						{"id":4, "name": "那些你很冒险的梦", }
-					]
-					let result = database.filter(function (item) {
-						return item.name.indexOf(keyword)>=0
-					})
-					setTimeout(function(){
-						resolve(result)
-					},(Math.random()*300+1000))
+					}
 				})
-				window.search = search
-			}
+				//搜索函数
+				function search(keyword) {
+					return new Promise((resolve,reject)=>{		
+						let result = response.filter(function (item) {
+							return item.name.indexOf(keyword)>=0
+						})
+						setTimeout(function(){
+							resolve(result)
+						},(Math.random()*300+1000))
+					})
+				}
+			})
 		} 
 	})
 
