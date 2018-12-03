@@ -109,8 +109,9 @@
 			//搜索页面设置
 			$.get('/NetEaseMusic/js/index.json').then(function(response){
 				let timer = undefined
+				//热门搜索
 				response.forEach((i)=>{
-					if (i.id<9) {
+					if (i.id<7) {
 						let $span = $(`
 							<span>${i.name}</span>
 							`)
@@ -118,41 +119,55 @@
 					}else{
 					}
 				})
+				//监听input
 				$('input#searchSong').on('input',function (e) {
 					let $input = $(e.currentTarget)
 					let value = $input.val().trim()
 					if (value.length !== 0) {
-						$('.icon-guanbi,.searchVal,#output').removeClass('hidden')
+						$('.icon-guanbi,.searchVal,.searchResult').removeClass('hidden')
 						$('.hotSearch,.historySearch').addClass('hidden')
 						let $span = $('.searchVal>span')
 						$span.empty().text(value)
 						$('.icon-guanbi').on('click',function () {
 							$('#searchSong').val('')
-							$('.icon-guanbi,.searchVal,#output').addClass('hidden')
-						$('.hotSearch,.historySearch').removeClass('hidden')
+							$('.icon-guanbi,.searchVal,.searchResult').addClass('hidden')
+							$('.resultCon').remove()
+							$('.hotSearch,.historySearch').removeClass('hidden')
 						})
 						if (timer) {
 							clearTimeout(timer)
+							$('.resultCon').remove()
 						}
 						timer = setTimeout(function () {
 							search(value).then((result)=>{
 								timer = undefined
 								if (result.length !== 0) {
-									console.log(result)
-									$('#output').text(result.map((r)=>r.name).join('-'))
-								}else{							
+									result.forEach((i)=>{
+										let $div = $(`
+										<div class="resultCon">
+											<svg class="icon " aria-hidden="trZue">
+											    <use xlink:href="#icon-sousuo"></use>
+											</svg>
+											<div><span>${i.name}</span></div>
+										</div>	
+											`)
+										$('.searchResult').append($div)
+									})
 								}
 							})
 						},300)
 					}else{
-						$('.icon-guanbi,.searchVal,#output').addClass('hidden')
+						$('.icon-guanbi,.searchVal,.searchResult').addClass('hidden')
 						$('.hotSearch,.historySearch').removeClass('hidden')
-						$('#output').text('')
+						$('.resultCon').remove()
 					}	
 				})
-				//监听键盘回车事件
+				//搜索并添加搜索历史
+				var save_max_len=50;//最多保存50条搜索记录，超过50条，新的记录覆盖最旧的
+				var display_max_len=10;//下拉框最多显示7条记录
 				$('input#searchSong').on('keydown',function (event) {
 					if (event.keyCode == "13") {
+						showHistory()
 						let $input = $(event.currentTarget)
 						let value = $input.val().trim()
 						console.log(value)
@@ -173,6 +188,65 @@
 						},(Math.random()*300+1000))
 					})
 				}
+				//显示历史记录
+				function showHistory() {
+					var data = new Array()
+					var cookie = $.cookie('search_history','search_val',{ expires: 30, path: '/' }); //获取cookie
+					console.log(cookie)
+					// if (cookie != null) {
+					// 	data = JSON.parse(cookie)
+					// }
+					$("#history").empty();//清除原来的显示内容，以免重复显示
+					if (data != null) {
+						var len = data.length>display_max_len?display_max_len:data.length;//显示时只显示特定的条数	
+						var limit = data.length-len-1;
+						for (var i = data.length-1; i >limit ; i--) {
+							if(data[i].indexOf(str)>-1){//动态创建历史记录条目
+								let $li = $(`
+									<li>
+										<svg class="icon" aria-hidden="true">
+										    <use xlink:href="#icon-lishi"></use>
+										</svg>
+										<div>
+											${i}
+											<svg class="icon " aria-hidden="true">
+											    <use xlink:href="#icon-guan"></use>
+											</svg>
+										</div>
+									</li>
+									`)
+								
+								$(".historySearch>ol").append($li);
+							}
+						}
+					}
+				}
+
+				//添加历史记录
+				function addHistory(str) {
+					var data = new Array();
+					var cookie = $.cookie('search_history','search_val',{ expires: 30, path: '/' }); //获取cookie
+					// if(cookie!=null){
+					// 	data = JSON.parse(cookie);
+					// }
+					
+					//如果历史记录中有，就先删除，然后再添加（保持最近搜索的记录在最新），否则，直接添加
+					var index=-1;
+					if(data){
+						index=data.indexOf(str);
+					}
+					if(index>-1){
+						data.splice(index,1);//删除原来的
+					}
+					
+					//最多保留save_max_len条记录，超过最大条数，就把第一条删除
+					if(data && data.length==save_max_len){
+						data.splice(0,1);
+					}
+					data.push(str);
+					$.cookie('search_history', JSON.stringify(data), {expires : 365});//设置一年有效期
+				}
+
 			})
 		} 
 	})
