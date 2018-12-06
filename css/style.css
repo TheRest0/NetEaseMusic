@@ -84,5 +84,5 @@ section.art .copyright{font-size: 3.2vw; transform: scale(.75); color: #888; }
 .historySearch{margin-top: 3vw; }
 .historySearch > ol > li{padding-top: 3.5vw; }
 .historySearch > ol > li > svg{font-size: 5vw; float: left; margin-left: 2vw; }
-.historySearch > ol > li div{border-bottom: 1px solid #F0F0F0; margin-left: 10%; padding-bottom:3.5vw; position: relative; width: 90%; height: 8vw;line-height: 5vw}
+.historySearch > ol > li div{border-bottom: 1px solid #F0F0F0; margin-left: 10%; padding-bottom:3.5vw; position: relative; width: 89%; height: 8vw;line-height: 5vw}
 .historySearch > ol > li div svg{position: absolute; right: 3vw; top: 1vw; font-size: 4.5vw; }

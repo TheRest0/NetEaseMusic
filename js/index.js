@@ -172,49 +172,68 @@
 				$('input#searchSong').on('keydown',function (event) {
 					let searchVal = $("#searchSong").val().trim()
 					if (searchVal != null) {
+
+
 						if (event.keyCode == "13") {
 							$.each(hisSearch,function(n,obj){ 
-								if (this.val == searchVal) {
-									console.log(hisSearch)
-									console.log(this.val)
+								if (obj.val == searchVal) {
+									len = len - 1
+									hisSearch.splice(n,1)
 									return false;
 								}
-								let $li = (`
-									<li>
-										<svg class="icon" aria-hidden="true">
-										    <use xlink:href="#icon-lishi"></use>
-										</svg>
-										<div>
-											${searchVal}
-											<svg class="icon " aria-hidden="true">
-											    <use xlink:href="#icon-guan"></use>
-											</svg>
-										</div>
-									</li>
-									`)
-								$('.historySearch > ol').prepend($li)
-								
 							})
-							
-							//将搜索内容添加到搜索记录
-							let canAdd = true
-							if (canAdd == true) {
-								let json = "["
-								let start = 0
-								if (len>9) {start = 1}
-								for (let i = start; i < len; i++) {
-									json = json + "{\"val\":\""+hisSearch[i].val+"\"},"
-								}
-								json = json + "{\"val\":\""+searchVal+"\"}]"
-								$.cookie("hisSearch",json,{expires:30}); 
-
+							$('.historySearch > ol').empty()
+							if (hisSearch) {
+								hisSearch.forEach((i)=>{
+									let $li = (`
+										<li>
+											<svg class="icon" aria-hidden="true">
+											    <use xlink:href="#icon-lishi"></use>
+											</svg>
+											<div>
+												${i.val}
+												<svg class="icon " aria-hidden="true">
+												    <use xlink:href="#icon-guan"></use>
+												</svg>
+											</div>
+										</li>
+										`)
+									$('.historySearch > ol').prepend($li)
+								})	
 							}
+							let $li = (`
+								<li>
+									<svg class="icon" aria-hidden="true">
+									    <use xlink:href="#icon-lishi"></use>
+									</svg>
+									<div>
+										${searchVal}
+										<svg class="icon " aria-hidden="true">
+										    <use xlink:href="#icon-guan"></use>
+										</svg>
+									</div>
+								</li>
+								`)
+							$('.historySearch > ol').prepend($li)
+							//将搜索内容添加到搜索记录
+							let json = "["
+							let start = 0
+							//确保显示十条历史记录
+							if (len>9) {start = 1 }
+							for (let i = start; i < len; i++) {
+								json = json + "{\"val\":\""+hisSearch[i].val+"\"},"
+							}
+							json = json + "{\"val\":\""+searchVal+"\"}]"
+							$.cookie("hisSearch",json,{expires:30}); 
+							
 							//搜索结果
 							search(searchVal).then((result)=>{
 								if (result.length !== 0) {
 								}
 							})
 						}
+
+
 					}
 				})
 				if(hisSearch){
