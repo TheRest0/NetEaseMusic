@@ -171,19 +171,17 @@
 				let len = 0	
 				$('input#searchSong').on('keydown',function (event) {
 					let searchVal = $("#searchSong").val().trim()
-					if (searchVal != null) {
-
-
+					if (searchVal != '') {
 						if (event.keyCode == "13") {
-							$.each(hisSearch,function(n,obj){ 
-								if (obj.val == searchVal) {
-									len = len - 1
-									hisSearch.splice(n,1)
-									return false;
-								}
-							})
-							$('.historySearch > ol').empty()
-							if (hisSearch) {
+							if (hisSearch != null) {
+								$.each(hisSearch,function(n,obj){ 
+									if (obj.val == searchVal) {
+										len = len - 1
+										hisSearch.splice(n,1)
+										return false;
+									}
+								})
+								$('.historySearch > ol').empty()
 								hisSearch.forEach((i)=>{
 									let $li = (`
 										<li>
@@ -200,6 +198,9 @@
 										`)
 									$('.historySearch > ol').prepend($li)
 								})	
+								
+							}else{
+								console.log("为空")
 							}
 							let $li = (`
 								<li>
@@ -224,7 +225,9 @@
 								json = json + "{\"val\":\""+hisSearch[i].val+"\"},"
 							}
 							json = json + "{\"val\":\""+searchVal+"\"}]"
-							$.cookie("hisSearch",json,{expires:30}); 
+							console.log(json)
+							$.cookie("hisSearch",json/*,{expires:30}*/) 
+							console.log($.cookie("hisSearch"))
 							
 							//搜索结果
 							search(searchVal).then((result)=>{
@@ -232,8 +235,7 @@
 								}
 							})
 						}
-
-
+					}else{	
 					}
 				})
 				if(hisSearch){
@@ -246,7 +248,7 @@
 							<svg class="icon" aria-hidden="true">
 							    <use xlink:href="#icon-lishi"></use>
 							</svg>
-							<div>
+							<div class="delHis">
 								${i.val}
 								<svg class="icon " aria-hidden="true">
 								    <use xlink:href="#icon-guan"></use>
@@ -257,6 +259,33 @@
 					$('.historySearch > ol').prepend($li)
 				})	
 
+				//点击历史记录搜索
+				$('.historySearch >ol').on('click','li',function () {
+					hisText = $(this).parent().parent().text()
+					// hisInd = hisSearch.length - $(this).index() - 1
+					// console.log(hisInd)
+					// console.log(hisSearch[hisInd])
+					
+				})
+				//监听关闭按钮
+				$('.historySearch .delHis').on('click','svg',function (e) {
+					hisInd = hisSearch.length - $(this).parent().parent().index() - 1
+					$(this).parent().parent().remove()
+					hisSearch.splice(hisInd, 1)
+					var st = JSON.stringify(hisSearch)
+					$.cookie("hisSearch",st,{expires:30})
+					//e.preventDefault()
+					
+					// $.each(hisSearch,function(n,obj){ 
+					// 	if (obj.val == hisText) {
+					// 		console.log(obj.val)
+					// 		// len = len - 1
+					// 		// hisSearch.splice(n,1)
+					// 		// return false;
+					// 	}
+					// })
+					
+				})
 				//搜索函数
 				function search(keyword) {
 					return new Promise((resolve,reject)=>{		
