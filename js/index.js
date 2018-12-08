@@ -114,32 +114,159 @@
 				response.forEach((i)=>{
 					if (i.id<7) {
 						let $span = $(`
-							<span>${i.name}</span>
+							<span class="hotSearVal">${i.name}</span>
 							`)
 						$('.hotCon').append($span)
 					}else{
 					}
 				})
-				//监听input
-				$('input#searchSong').on('input',function (e) {
-					let $input = $(e.currentTarget)
-					let value = $input.val().trim()
+
+				var save_max_len=10//设置最大保存数量
+				$(document).ready(function() {
+					$('#searchSong').val('')
+					showHistory();
+
+					//监听input进行元素切换
+					$('input#searchSong').on('input',function (e) {
+						let $input = $(e.currentTarget)
+						let value = $input.val().trim()
+						$('.resultDetails > ol > li,.resultCon').remove()
+						changeMId(value)
+					})
+
+					//监听输入框
+					$('input#searchSong').on('keydown',function (event) {
+						var search_text = $("#searchSong").val().trim();
+						//监听回车
+						if (event.keyCode == "13") {
+							if (search_text != '') {
+								addHistory(search_text)//添加历史记录
+								showHistory()
+								finalResult(search_text)
+							}else{
+								alert("请输入歌曲信息")
+							}
+						}	
+					})
+
+					//监听输入框关闭按钮
+					$('.icon-guanbi').on('click',function () {
+						$('#searchSong').val('')
+						$('.icon-guanbi,.searchVal,.searchResult,.resultDetails').addClass('hidden')
+						$('.resultCon').remove()
+						$('.hotSearch,.historySearch').removeClass('hidden')
+					})
+
+					//监听关闭按钮删除历史记录
+					$('.historySearch > ol').on('click','.delHis svg',function (event) {
+						let index =$(this).parent().parent().index()
+						deleteHistory(index)
+						event.stopPropagation()
+					})
+
+					//监听点击历史记录再次查询
+					$('.historySearch > ol').on('click','li',function () {
+						searchVal = $(this).text().trim()
+						$('#searchSong').val(searchVal)
+						finalResult(searchVal)
+						addHistory(searchVal)
+						showHistory()
+					})
+
+					//监听联想内容点击查询
+					$('.searchResult').on('click','.resultCon',function () {
+						searchVal = $(this).text().trim()
+						$('#searchSong').val(searchVal)
+						finalResult(searchVal)
+						addHistory(searchVal)
+						showHistory()
+					})
+
+					//热门搜索点击查询
+					$('.hotSearch').on('click','.hotSearVal',function () {
+						searchVal = $(this).text().trim()
+						$('#searchSong').val(searchVal)
+						finalResult(searchVal)
+						addHistory(searchVal)
+						showHistory()
+					})
+				})
+
+				//显示历史记录
+				function showHistory() {
+					var data = new Array();
+					var cookie=$.cookie("search_history");//获取cookie
+					if(cookie!=null){
+						data = JSON.parse(cookie); //从cookie中取出数组
+					}
+					$('.historySearch > ol').empty()//清除原来的显示内容，以免重复显示
+					if (data != null) {
+						for (let i = 0; i < data.length ; i++) {
+							let $li = (`
+								<li>
+									<svg class="icon" aria-hidden="true">
+									    <use xlink:href="#icon-lishi"></use>
+									</svg>
+									<div class="delHis">
+										${data[i]}
+										<svg class="icon " aria-hidden="true">
+										    <use xlink:href="#icon-guan"></use>
+										</svg>
+									</div>
+								</li>
+								`)
+							$('.historySearch > ol').prepend($li)
+						}
+					}
+				}
+				
+				//添加历史记录
+				function addHistory(str) {
+					var data = new Array();
+					var cookie = $.cookie('search_history'); //获取cookie
+					if(cookie!=null){
+						data = JSON.parse(cookie);
+					}
+					//如果历史记录中有，就先删除，然后再添加（保持最近搜索的记录在最新），否则，直接添加
+					var index=-1;
+					if(data){
+						index=data.indexOf(str);
+					}
+					if(index>-1){
+						data.splice(index,1);//删除原来的
+					}
+					
+					//最多保留save_max_len条记录，超过最大条数，就把第一条删除
+					if(data && data.length==save_max_len){
+						data.splice(0,1);
+					}
+					data.push(str);
+					$.cookie('search_history', JSON.stringify(data), {expires : 7});//设置一周有效期
+					console.log("触发了添加事件")	
+				}
+
+				//删除历史记录
+				function deleteHistory(index){
+					let data = new Array();
+					data = JSON.parse($.cookie("search_history")); 
+					delIdx = data.length - index - 1
+					data.splice(delIdx,1);
+					$.cookie('search_history', JSON.stringify(data), {expires : 7});
+					showHistory();
+				}
+
+				//搜索联想元素切换
+				function changeMId(value,event) {
 					if (value.length !== 0) {
 						$('.icon-guanbi,.searchVal,.searchResult').removeClass('hidden')
 						$('.hotSearch,.historySearch').addClass('hidden')
 						let $span = $('.searchVal>span')
 						$span.empty().text(value)
-						$('.icon-guanbi').on('click',function () {
-							$('#searchSong').val('')
-							$('.icon-guanbi,.searchVal,.searchResult').addClass('hidden')
-							$('.resultCon').remove()
-							$('.hotSearch,.historySearch').removeClass('hidden')
-						})
 						if (timer) {
 							clearTimeout(timer)
-							$('.resultCon').remove()
+							
 						}
-						timer = setTimeout(function () {
+						timer = setTimeout(function () {	
 							search(value).then((result)=>{
 								timer = undefined
 								if (result.length !== 0) {
@@ -158,134 +285,12 @@
 							})
 						},300)
 					}else{
-						$('.icon-guanbi,.searchVal,.searchResult').addClass('hidden')
+						$('.icon-guanbi,.searchVal,.searchResult,.resultDetails').addClass('hidden')
 						$('.hotSearch,.historySearch').removeClass('hidden')
 						$('.resultCon').remove()
 					}	
-				})
-
-
-				//搜索并添加搜索历史
-				
-				let hisSearch = $.cookie("hisSearch")
-				let len = 0	
-				$('input#searchSong').on('keydown',function (event) {
-					let searchVal = $("#searchSong").val().trim()
-					if (searchVal != '') {
-						if (event.keyCode == "13") {
-							if (hisSearch != null) {
-								$.each(hisSearch,function(n,obj){ 
-									if (obj.val == searchVal) {
-										len = len - 1
-										hisSearch.splice(n,1)
-										return false;
-									}
-								})
-								$('.historySearch > ol').empty()
-								hisSearch.forEach((i)=>{
-									let $li = (`
-										<li>
-											<svg class="icon" aria-hidden="true">
-											    <use xlink:href="#icon-lishi"></use>
-											</svg>
-											<div>
-												${i.val}
-												<svg class="icon " aria-hidden="true">
-												    <use xlink:href="#icon-guan"></use>
-												</svg>
-											</div>
-										</li>
-										`)
-									$('.historySearch > ol').prepend($li)
-								})	
-								
-							}else{
-								console.log("为空")
-							}
-							let $li = (`
-								<li>
-									<svg class="icon" aria-hidden="true">
-									    <use xlink:href="#icon-lishi"></use>
-									</svg>
-									<div>
-										${searchVal}
-										<svg class="icon " aria-hidden="true">
-										    <use xlink:href="#icon-guan"></use>
-										</svg>
-									</div>
-								</li>
-								`)
-							$('.historySearch > ol').prepend($li)
-							//将搜索内容添加到搜索记录
-							let json = "["
-							let start = 0
-							//确保显示十条历史记录
-							if (len>9) {start = 1 }
-							for (let i = start; i < len; i++) {
-								json = json + "{\"val\":\""+hisSearch[i].val+"\"},"
-							}
-							json = json + "{\"val\":\""+searchVal+"\"}]"
-							console.log(json)
-							$.cookie("hisSearch",json/*,{expires:30}*/) 
-							console.log($.cookie("hisSearch"))
-							
-							//搜索结果
-							search(searchVal).then((result)=>{
-								if (result.length !== 0) {
-								}
-							})
-						}
-					}else{	
-					}
-				})
-				if(hisSearch){
-					hisSearch = eval("("+hisSearch+")");
-					len = hisSearch.length
 				}
-				hisSearch.forEach((i)=>{
-					let $li = (`
-						<li>
-							<svg class="icon" aria-hidden="true">
-							    <use xlink:href="#icon-lishi"></use>
-							</svg>
-							<div class="delHis">
-								${i.val}
-								<svg class="icon " aria-hidden="true">
-								    <use xlink:href="#icon-guan"></use>
-								</svg>
-							</div>
-						</li>
-						`)
-					$('.historySearch > ol').prepend($li)
-				})	
 
-				//点击历史记录搜索
-				$('.historySearch >ol').on('click','li',function () {
-					hisText = $(this).parent().parent().text()
-					// hisInd = hisSearch.length - $(this).index() - 1
-					// console.log(hisInd)
-					// console.log(hisSearch[hisInd])
-					
-				})
-				//监听关闭按钮
-				$('.historySearch .delHis').on('click','svg',function (e) {
-					hisInd = hisSearch.length - $(this).parent().parent().index() - 1
-					$(this).parent().parent().remove()
-					hisSearch.splice(hisInd, 1)
-					var st = JSON.stringify(hisSearch)
-					$.cookie("hisSearch",st,{expires:30})
-					//e.preventDefault()
-					
-					// $.each(hisSearch,function(n,obj){ 
-					// 	if (obj.val == hisText) {
-					// 		console.log(obj.val)
-					// 		// len = len - 1
-					// 		// hisSearch.splice(n,1)
-					// 		// return false;
-					// 	}
-					// })
-					
-				})
 				//搜索函数
 				function search(keyword) {
 					return new Promise((resolve,reject)=>{		
@@ -298,74 +303,31 @@
 					})
 				}
 
-
-
-
-
-
-				//显示历史记录
-				// function showHistory() {
-				// 	var data = new Array()
-				// 	var cookie = $.cookie('search_history','search_val',{ expires: 30, path: '/' }); //获取cookie
-				// 	console.log(cookie)
-				// 	// if (cookie != null) {
-				// 		// 	data = JSON.parse(cookie)
-				// 	// }
-				// 	$("#history").empty();//清除原来的显示内容，以免重复显示
-				// 	if (data != null) {
-				// 		var len = data.length>display_max_len?display_max_len:data.length;//显示时只显示特定的条数	
-				// 		var limit = data.length-len-1;
-				// 		for (var i = data.length-1; i >limit ; i--) {
-				// 			if(data[i].indexOf(str)>-1){//动态创建历史记录条目
-				// 				let $li = $(`
-				// 					<li>
-				// 						<svg class="icon" aria-hidden="true">
-				// 						    <use xlink:href="#icon-lishi"></use>
-				// 						</svg>
-				// 						<div>
-				// 							${i}
-				// 							<svg class="icon " aria-hidden="true">
-				// 							    <use xlink:href="#icon-guan"></use>
-				// 							</svg>
-				// 						</div>
-				// 					</li>
-				// 					`)
-								
-				// 				$(".historySearch>ol").append($li);
-				// 			}
-				// 		}
-				// 	}
-				// }
-
-				//添加历史记录
-				// function addHistory(str) {
-				// 	var data = new Array();
-				// 	var cookie = $.cookie('search_history'); //获取cookie
-				// 	if(cookie!=null){
-				// 		data = JSON.parse(cookie);
-				// 	}
-					
-				// 	//如果历史记录中有，就先删除，然后再添加（保持最近搜索的记录在最新），否则，直接添加
-				// 	var index=-1;
-				// 	if(data){
-				// 		index=data.indexOf(str);
-				// 	}
-				// 	if(index>-1){
-				// 		data.splice(index,1);//删除原来的
-				// 	}
-					
-				// 	//最多保留save_max_len条记录，超过最大条数，就把第一条删除
-				// 	if(data && data.length==save_max_len){
-				// 		data.splice(0,1);
-				// 	}
-				// 	data.push(str);
-				// 	$.cookie('search_history', JSON.stringify(data), {expires : 365});//设置一年有效期
-				// 	console.log(data)
-				// }
-
+				//搜索结果页面
+				function finalResult(value) {
+					$('.resultDetails > ol > li').remove()
+					$('.searchVal,.searchResult,.historySearch,.hotSearch').addClass('hidden')
+					$('.resultDetails,.icon-guanbi').removeClass('hidden')
+					search(value).then((result)=>{
+						if (result.length !== 0) {
+							result.forEach((i)=>{
+								let $li = $(`
+									<li>
+										<a href="/NetEaseMusic/song/song.html?id=${i.id}">
+											<h3>${i.name}</h3>
+											<p>${i.album}</p>
+											<span></span>
+										</a>
+									</li>			
+										`)
+								$('.resultDetails > ol').append($li)
+							})
+						}
+					})
+				}
 			})
 		} 
 	})
-
+	
 	
 })

@@ -86,3 +86,10 @@ section.art .copyright{font-size: 3.2vw; transform: scale(.75); color: #888; }
 .historySearch > ol > li > svg{font-size: 5vw; float: left; margin-left: 2vw; }
 .historySearch > ol > li div{border-bottom: 1px solid #F0F0F0; margin-left: 10%; padding-bottom:3.5vw; position: relative; width: 89%; height: 8vw;line-height: 5vw}
 .historySearch > ol > li div svg{position: absolute; right: 3vw; top: 1vw; font-size: 4.5vw; }
+
+
+.resultDetails > ol{padding-left: 2.6vw; }
+.resultDetails > ol > li{border-bottom: 1px solid #E2E2E2; padding: 1.4vw 0; position: relative;}
+.resultDetails > ol > li > a > h3{width:87.8vw;font-size: 4.53vw; margin-bottom: 2px;display: -webkit-box;-webkit-line-clamp:1; -webkit-box-orient:vertical; overflow: hidden; text-overflow: ellipsis; }
+.resultDetails > ol > li > a > p{font-size: 3.2vw; color: #888; }
+.resultDetails > ol > li > a > span{display: inline-block; width: 6vw; height: 6vw; background: url(/NetEaseMusic/image/index.png); no-repeat; background-size: 44vw 26vw; background-position: -6.4vw 0; position: absolute; right: 5px; top: 50%; transform: translate(0,-50%); }
