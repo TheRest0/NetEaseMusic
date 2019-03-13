@@ -190,6 +190,14 @@
 						addHistory(searchVal)
 						showHistory()
 					})
+
+					//点击自动匹配内容进行搜索
+					$('.searchVal').on('click',function(){
+						searchVal = $("#searchSong").val().trim()
+						finalResult(searchVal)
+						addHistory(searchVal)
+						showHistory()
+					})
 				})
 
 				//显示历史记录
@@ -242,7 +250,6 @@
 					}
 					data.push(str);
 					$.cookie('search_history', JSON.stringify(data), {expires : 7});//设置一周有效期
-					console.log("触发了添加事件")	
 				}
 
 				//删除历史记录
@@ -322,6 +329,9 @@
 										`)
 								$('.resultDetails > ol').append($li)
 							})
+						}else{
+							console.log('zero')
+							$('.resultDetails > ol').append($(`<li>暂无信息</li>`))
 						}
 					})
 				}
